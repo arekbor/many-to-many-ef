@@ -1,4 +1,4 @@
-using Foo.Models;
+using Foo.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,30 +19,17 @@ internal sealed class UserTableConfiguration : BaseEntityTypeConfiguration<UserT
         builder.Property(x => x.UserId)
             .HasColumnName("user_id");
 
-        // builder.HasMany(x => x.ClaimTables)
-        //     .WithMany(x => x.UserTables)
-        //     .UsingEntity<UserClaimsTable>();
-
-        builder.HasMany(x => x.ClaimTables)
-            .WithMany(x => x.UserTables)
-            .UsingEntity<UserClaimsTable>(
-                j => j
-                    .HasOne(x => x.ClaimTable)
-                    .WithMany()
-                    .HasForeignKey(x => x.UserClaimsClaimId)
-                    .HasPrincipalKey(x => x.ClaimId),
-                j => j
-                    .HasOne(x => x.UserTable)
-                    .WithMany()
-                    .HasForeignKey(x => x.UserTableUserId)
-                    .HasPrincipalKey(x => x.UserId),
-                j =>
-                {
-                    j.ToTable("user_claims_table");
-                    j.Property(x => x.UserTableUserId).HasColumnName("user_table_user_id");
-                    j.Property(x => x.UserClaimsClaimId).HasColumnName("user_claims_claim_id");
-                }
-            );
+        builder
+            .HasMany(e => e.ClaimTables)
+            .WithMany(e => e.UserTables)
+            .UsingEntity(
+                //enter name of join table
+                "user_claims_table",
+                //enter names of reference columns
+                l => l.HasOne(typeof(ClaimTable)).WithMany().HasForeignKey("user_claims_claim_id").HasPrincipalKey(nameof(ClaimTable.ClaimId)),
+                r => r.HasOne(typeof(UserTable)).WithMany().HasForeignKey("user_table_user_id").HasPrincipalKey(nameof(UserTable.UserId)),
+                //enter references key names
+                j => j.HasKey("user_claims_claim_id", "user_table_user_id"));
 
         base.Configure(builder);
     }

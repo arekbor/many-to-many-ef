@@ -1,4 +1,4 @@
-using Foo.Models;
+using Foo.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,14 +15,13 @@ public class FooController : ControllerBase
     }
 
     [HttpGet("fooTest")]
-    public async Task<IActionResult> FooTest(string claimId) 
+    public async Task<IActionResult> FooTest(string userId) 
     {
-        var claims = await _db.Set<ClaimTable>()
-            .AsQueryable()
-            .Include(x => x.UserTables)
-            .ToListAsync();
+        var claims = await _db.Set<UserTable>()
+            .Include(x => x.ClaimTables)
+            .FirstOrDefaultAsync(x => x.UserId == userId);
 
 
-        return Ok(claims);
+        return Ok(claims?.ClaimTables);
     }
 }

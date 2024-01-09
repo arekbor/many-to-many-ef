@@ -1,4 +1,4 @@
-using Foo.Models;
+using Foo.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,27 +18,6 @@ internal sealed class ClaimTableConfiguration : BaseEntityTypeConfiguration<Clai
         
         builder.Property(x => x.ClaimName)
             .HasColumnName("claim_name");
-
-        builder.HasMany(x => x.UserTables)
-            .WithMany(x => x.ClaimTables)
-            .UsingEntity<UserClaimsTable>(
-                j => j
-                    .HasOne(x => x.UserTable)
-                    .WithMany()
-                    .HasForeignKey(x => x.UserTableUserId)
-                    .HasPrincipalKey(x => x.UserId),
-                j => j
-                    .HasOne(x => x.ClaimTable)
-                    .WithMany()
-                    .HasForeignKey(x => x.UserClaimsClaimId)
-                    .HasPrincipalKey(x => x.ClaimId),
-                j =>
-                {
-                    j.ToTable("user_claims_table");
-                    j.Property(x => x.UserTableUserId).HasColumnName("user_table_user_id");
-                    j.Property(x => x.UserClaimsClaimId).HasColumnName("user_claims_claim_id");
-                }
-            );
 
         base.Configure(builder);
     }

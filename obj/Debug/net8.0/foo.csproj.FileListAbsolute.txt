@@ -103,3 +103,4 @@
 /media/arek/Hitachi/projects/dotnet_projects/foo/foo/obj/Debug/net8.0/foo.pdb
 /media/arek/Hitachi/projects/dotnet_projects/foo/foo/obj/Debug/net8.0/foo.genruntimeconfig.cache
 /media/arek/Hitachi/projects/dotnet_projects/foo/foo/obj/Debug/net8.0/ref/foo.dll
+/media/arek/Hitachi/projects/dotnet_projects/foo/foo/obj/Debug/net8.0/foo.sourcelink.json
