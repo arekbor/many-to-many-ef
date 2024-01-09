@@ -33,9 +33,9 @@ INSERT INTO user_table (username, user_id) VALUES
   ('MarkEldon', 'EB106'),
   ('JohnCheese', 'XX006'),
   ('BobJohnson', 'BJ789');
-```
 
 INSERT INTO user_claims_table (user_claims_claim_id, user_table_user_id) VALUES
-('RA001', 'XX006'),
-('WA002', 'XX006'),
-('AA003', 'XX006');
+  ('RA001', 'XX006'),
+  ('WA002', 'XX006'),
+  ('AA003', 'XX006');
+```
